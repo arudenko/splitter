@@ -59,6 +59,9 @@ var BillItem = React.createClass({
     },
 
     render: function () {
+
+        var leftQuantity = this.props.model.getItemLeftQuantity(this.props.item);
+
         return (
             <li className={React.addons.classSet({
                 completed: this.props.item.completed,
@@ -72,7 +75,7 @@ var BillItem = React.createClass({
                     onChange={this.props.onToggle}
                     />
                     <label onDoubleClick={this.handleEdit}>
-							{this.props.item.title}|{this.props.item.count}|{this.props.item.amount}
+							{this.props.item.title}|{this.props.item.count}|{this.props.item.amount} Left: {leftQuantity}
                     </label>
                     <button className="destroy" onClick={this.props.onDestroy} />
                 </div>

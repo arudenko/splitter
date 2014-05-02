@@ -167,7 +167,8 @@ var app = app || {};
      * Remove item from list
      * @param item
      */
-    app.BillModel.prototype.destroy = function (item) {
+    app.BillModel.prototype.destroyItem = function (item) {
+        //TODO Remove this item form all users
         this.items = this.items.filter(function (candidate) {
             return candidate !== item;
         });
@@ -211,5 +212,19 @@ var app = app || {};
         this.items = [];
         this.users = [];
         this.inform();
+    };
+
+    app.BillModel.prototype.getItemLeftQuantity = function (item){
+        var totalAmount = this.users.reduce(function (accum, user) {
+            var userAmount = user.consumed_items.reduce(function (accum, consumedItem) {
+                if (consumedItem.item_id == item.id){
+                    return accum + consumedItem.quantity;
+                } else {return accum;}
+
+            }, 0);
+
+            return accum + userAmount;
+        }, 0);
+        return item.count - totalAmount;
     };
 })();

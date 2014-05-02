@@ -146,4 +146,21 @@ describe("Bill Model Tests", function () {
 
         expect(model.getItemById(model.items[0].id)).toBe(model.items[0]);
     });
+
+    it("getItemLeftQuantity ", function () {
+        model.addItem("Test Name", 2, 40);
+        model.addItem("Test Name 1", 3, 15);
+        model.addUser("Alex");
+
+        model.addUserConsumption(model.items[0], model.users[0], 2);
+        model.addUserConsumption(model.items[1], model.users[0], 2);
+
+        var res;
+        res = model.getItemLeftQuantity(model.items[0]);
+        expect(res).toBe(0);
+
+        res = model.getItemLeftQuantity(model.items[1]);
+        expect(res).toBe(1);
+    });
+
 });

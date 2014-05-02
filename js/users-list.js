@@ -30,7 +30,7 @@ var UsersList = React.createClass({
         this.props.model.toggle(todoToToggle);
     },
 
-    destroy: function (user) {
+    destroyItem: function (user) {
         this.props.model.destroyUser(user);
     },
 
@@ -74,7 +74,7 @@ var UsersList = React.createClass({
                     user={user}
                     model={this.props.model}
                     onToggle={this.toggle.bind(this, user)}
-                    onDestroy={this.destroy.bind(this, user)}
+                    onDestroy={this.destroyItem.bind(this, user)}
                     onEdit={this.edit.bind(this, user)}
                     editing={this.state.editing === user.id}
                     onSave={this.save.bind(this, user)}

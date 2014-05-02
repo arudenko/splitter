@@ -35,8 +35,8 @@ var Bill = React.createClass({
         this.props.model.toggle(todoToToggle);
     },
 
-    destroy: function (todo) {
-        this.props.model.destroy(todo);
+    destroyItem: function (todo) {
+        this.props.model.destroyItem(todo);
     },
 
     edit: function (todo, callback) {
@@ -71,8 +71,9 @@ var Bill = React.createClass({
                 <BillItem
                 key={item.id}
                 item={item}
+                model={this.props.model}
                 onToggle={this.toggle.bind(this, item)}
-                onDestroy={this.destroy.bind(this, item)}
+                onDestroy={this.destroyItem.bind(this, item)}
                 onEdit={this.edit.bind(this, item)}
                 editing={this.state.editing === item.id}
                 onSave={this.save.bind(this, item)}
