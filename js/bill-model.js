@@ -24,6 +24,21 @@ var app = app || {};
         this.items = Utils.store(key);
         this.users = Utils.store(this.key_users);
         this.onChanges = [];
+
+        this.service_charge = 10;
+        this.tax = 7.0;
+    };
+
+    app.BillModel.prototype.updateTaxes = function(service_charge, tax){
+        this.service_charge = service_charge;
+        this.tax = tax;
+        this.inform();
+    };
+
+    app.BillModel.prototype.applyTaxesChargesForAmount = function(amount){
+        var amount_after_service = amount + amount * (this.service_charge * 0.01);
+        return amount_after_service + amount_after_service * (this.tax * 0.01);
+
     };
 
     app.BillModel.prototype.subscribe = function (onChange) {
@@ -111,7 +126,7 @@ var app = app || {};
             return 0;
         }
 
-        return consumedItem.quantity * item.amount / item.count;
+        return this.applyTaxesChargesForAmount(consumedItem.quantity * item.amount / item.count);
     };
 
     app.BillModel.prototype.getUserTotalQuantity = function (selectedUser) {

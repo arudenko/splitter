@@ -111,7 +111,7 @@ describe("Bill Model Tests", function () {
         expect(res).toBe(2);
 
         res = model.getUserTotalAmount(model.users[0]);
-        expect(res).toBe(10);
+        expect(res).toBe(11.77);
     });
 
     it("getUserItemAmount", function () {
@@ -123,7 +123,7 @@ describe("Bill Model Tests", function () {
         model.addUserConsumption(model.items[0], model.users[0], 2);
 
         var res = model.getUserItemAmount(model.users[0], model.items[0].id);
-        expect(res).toBe(10);
+        expect(res).toBe(11.77);
 
     });
 
@@ -136,7 +136,7 @@ describe("Bill Model Tests", function () {
         model.addUserConsumption(model.items[1], model.users[0], 2);
 
         var res = model.getUserTotalAmount(model.users[0]);
-        expect(res).toBe(50);
+        expect(res).toBeCloseTo(58.85, 2);
 
     });
 
@@ -161,6 +161,11 @@ describe("Bill Model Tests", function () {
 
         res = model.getItemLeftQuantity(model.items[1]);
         expect(res).toBe(1);
+    });
+
+    it("applyTaxesChargesForAmount", function () {
+        var res = model.applyTaxesChargesForAmount(59.4);
+        expect(res).toBeCloseTo(69.91, 2);
     });
 
 });

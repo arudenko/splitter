@@ -149,11 +149,18 @@ var Bill = React.createClass({
 });
 
 var App = React.createClass({
+    handleChange: function (event) {
+        var service_charge = parseFloat(this.refs.serviceChargeText.getDOMNode().value);
+        var tax = parseFloat(this.refs.taxText.getDOMNode().value);
+        this.props.model.updateTaxes(service_charge, tax);
+    },
 
     render: function () {
         return (
 
             <div>
+                Service Charge: <input ref="serviceChargeText" defaultValue={model.service_charge} onChange={this.handleChange}/>% <br/>
+                Tax: <input ref="taxText" defaultValue={model.tax} onChange={this.handleChange} />% <br/>
                 <Bill model={this.props.model}/>
                 Users:
                 <UsersList model={this.props.model}/>
