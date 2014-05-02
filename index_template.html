@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- CSS Reset -->
+    <link rel="stylesheet" type="text/css"  href="css/reset.css">
+
+    <!-- Global CSS for the page and tiles -->
+    <link rel="stylesheet" type="text/css"  href="css/main.css">
+
+    <title>Test</title>
+
+    <!-- include jQuery -->
+    <script src="js/libs.min.js"></script>
+
+<!--     <link rel="stylesheet" type="text/css" href="css/style.css">
+ --></head>
+<body>
+
+<div id="container"></div>
+
+<script src="js/all.min.js"></script>
+<script type="text/javascript">
+React.renderComponent(
+    Bill( {username:"gasgashg"}),
+    document.getElementById('container')
+);
+</script>
+</body>
+</html>
