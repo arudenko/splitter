@@ -6,4 +6,4 @@ grunt build
 
 cd dist
 
-tape -c ../.taperc
+python -m SimpleHTTPServer

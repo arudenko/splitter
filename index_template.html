@@ -5,15 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <!-- CSS Reset -->
-    <link rel="stylesheet" type="text/css"  href="css/reset.css">
+    <link rel="stylesheet" type="text/css"  href="css/base.css">
 
-    <!-- Global CSS for the page and tiles -->
-    <link rel="stylesheet" type="text/css"  href="css/main.css">
+    <title>Splitter</title>
 
-    <title>Test</title>
-
-    <!-- include jQuery -->
-    <script src="js/libs.min.js"></script>
 
 <!--     <link rel="stylesheet" type="text/css" href="css/style.css">
  --></head>
@@ -21,12 +16,20 @@
 
 <div id="container"></div>
 
+<script src="js/libs.min.js"></script>
 <script src="js/all.min.js"></script>
+
 <script type="text/javascript">
-React.renderComponent(
-    Bill( {username:"gasgashg"}),
-    document.getElementById('container')
-);
+    var model = new app.BillModel('bill-model');
+    function render() {
+        React.renderComponent(
+                App({model:model}),
+                document.getElementById('container')
+        );
+    }
+
+    model.subscribe(render);
+    render();
 </script>
 </body>
 </html>

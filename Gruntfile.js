@@ -22,30 +22,19 @@ module.exports = function(grunt) {
             }
         },
 
-        concat: {
-            dist: {
-                src: [
-                    'libs/jquery.min.js', 
-                    'libs/react.min.js', 
-                    'libs/react-infinite-scroll.min.js', 
-                    'build_jsx/**/*.js'
-                    ],
-                dest: 'dest/js/all.js',
-            },
-        },
-
         uglify: {
             dist: {
                 files: {
                     'dist/js/all.min.js': [
+                        'build_jsx/js/utils.js',
                         'build_jsx/**/*.js',
                         '!build_jsx/**/__tests__/*',
+                        '!build_jsx/js/start.js'
                         ],
 
                     'dist/js/libs.min.js': [
-                        'libs/react.min.js', 
-                        'libs/jquery.min.js', 
-                        'libs/react-infinite-scroll.min.js', 
+                        'libs/jquery.min.js',
+                        'libs/react-with-addons.js',
                         ]
 
                 }
@@ -60,7 +49,7 @@ module.exports = function(grunt) {
             
             css: {
                 src: 'css/*',
-                dest: 'dist/',
+                dest: 'dist/'
             }
         },
 
