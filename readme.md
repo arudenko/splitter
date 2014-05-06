@@ -1,7 +1,8 @@
 # Bill Splitter
+
 When you need a split between participants. 
 
-Compiled version is available at [Splitter](http://d3srl5srr7lrhy.cloudfront.net/splitter/index.html)
+Compiled version is available at [splitbillwith.me](http://splitbillwith.me/)
 
 ## Setup
 

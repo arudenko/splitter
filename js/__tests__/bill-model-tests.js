@@ -100,18 +100,21 @@ describe("Bill Model Tests", function () {
 
     it("Updated User Consumption", function () {
         model.addItem("Test Name", 4, 20);
-        model.addItem("Test Name 1", 3, 22.34);
+        model.addItem("Test Name 1", 3, 15);
         model.addUser("Alex");
+
+        model.updateTaxes(0,0);
 
         model.addUserConsumption(model.items[0], model.users[0], 1);
 
+        model.addUserConsumption(model.items[1], model.users[0], 2);
         model.addUserConsumption(model.items[0], model.users[0], 2);
 
         var res = model.getUserTotalQuantity(model.users[0]);
-        expect(res).toBe(2);
+        expect(res).toBe(4);
 
         res = model.getUserTotalAmount(model.users[0]);
-        expect(res).toBe(11.77);
+        expect(res).toBe(20);
     });
 
     it("getUserItemAmount", function () {
@@ -166,6 +169,19 @@ describe("Bill Model Tests", function () {
     it("applyTaxesChargesForAmount", function () {
         var res = model.applyTaxesChargesForAmount(59.4);
         expect(res).toBeCloseTo(69.91, 2);
+    });
+
+    it("Delete Item -- delete reference in each user", function () {
+        model.addItem("Test Name", 2, 40);
+        model.addItem("Test Name 1", 3, 15);
+        model.addUser("Alex");
+
+        model.addUserConsumption(model.items[0], model.users[0], 2);
+        model.addUserConsumption(model.items[1], model.users[0], 2);
+        model.destroyItem(model.items[0]);
+
+        var res = model.getUserTotalQuantity(model.users[0]);
+        expect(res).toBe(2);
     });
 
 });

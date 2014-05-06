@@ -29,13 +29,13 @@ var app = app || {};
         this.tax = 7.0;
     };
 
-    app.BillModel.prototype.updateTaxes = function(service_charge, tax){
+    app.BillModel.prototype.updateTaxes = function (service_charge, tax) {
         this.service_charge = service_charge;
         this.tax = tax;
         this.inform();
     };
 
-    app.BillModel.prototype.applyTaxesChargesForAmount = function(amount){
+    app.BillModel.prototype.applyTaxesChargesForAmount = function (amount) {
         var amount_after_service = amount + amount * (this.service_charge * 0.01);
         return amount_after_service + amount_after_service * (this.tax * 0.01);
 
@@ -45,10 +45,15 @@ var app = app || {};
         this.onChanges.push(onChange);
     };
 
+    /**
+     * Save data to local storage and notify subscribers about change
+     */
     app.BillModel.prototype.inform = function () {
         Utils.store(this.key, this.items);
         Utils.store(this.key_users, this.users);
-        this.onChanges.forEach(function (cb) { cb(); });
+        this.onChanges.forEach(function (cb) {
+            cb();
+        });
     };
 
     app.BillModel.prototype.addItem = function (title, count, amount) {
@@ -67,7 +72,7 @@ var app = app || {};
         this.users = this.users.concat({
             id: Utils.uuid(),
             title: title,
-            consumed_items:[]
+            consumed_items: []
         });
         this.inform();
     };
@@ -89,13 +94,13 @@ var app = app || {};
                 var indexToRemove = -1;
                 for (var i = 0; i < user.consumed_items.length; i++) {
                     var obj = user.consumed_items[i];
-                    if (obj.item_id == selectedItem.id){
+                    if (obj.item_id == selectedItem.id) {
                         indexToRemove = i;
                     }
                 }
 
-                if (indexToRemove > -1){
-                    user.consumed_items.splice(indexToRemove);
+                if (indexToRemove > -1) {
+                    user.consumed_items.splice(indexToRemove, 1);
                 }
 
                 user.consumed_items = user.consumed_items.concat({item_id: selectedItem.id, quantity: quantity});
@@ -118,11 +123,11 @@ var app = app || {};
         var consumedItem;
         for (var i = 0; i < selectedUser.consumed_items.length; i++) {
             var o = selectedUser.consumed_items[i];
-            if(o.item_id == consumedItemId){
+            if (o.item_id == consumedItemId) {
                 consumedItem = o;
             }
         }
-        if (!consumedItem){
+        if (!consumedItem) {
             return 0;
         }
 
@@ -148,7 +153,7 @@ var app = app || {};
     app.BillModel.prototype.getItemById = function (id) {
         for (var i = 0; i < this.items.length; i++) {
             var obj = this.items[i];
-            if (obj.id == id){
+            if (obj.id == id) {
                 return obj;
             }
         }
@@ -156,33 +161,30 @@ var app = app || {};
     };
 
 
-    app.BillModel.prototype.toggleAll = function (checked) {
-        // Note: it's usually better to use immutable data structures since they're
-        // easier to reason about and React works very well with them. That's why we
-        // use map() and filter() everywhere instead of mutating the array or todo
-        // items themselves.
-        this.items = this.items.map(function (todo) {
-            return Utils.extend({}, todo, {completed: checked});
-        });
-
-        this.inform();
-    };
-
-    app.BillModel.prototype.toggle = function (todoToToggle) {
-        this.items = this.items.map(function (todo) {
-            return todo !== todoToToggle ?
-                todo :
-                Utils.extend({}, todo, {completed: !todo.completed});
-        });
-
-        this.inform();
-    };
-
     /**
      * Remove item from list
      * @param item
      */
     app.BillModel.prototype.destroyItem = function (item) {
+
+        this.users = this.users.map(function (user) {
+            //Update same consumption with new value
+            var indexToRemove = -1;
+            for (var i = 0; i < user.consumed_items.length; i++) {
+                var obj = user.consumed_items[i];
+                if (obj.item_id == item.id) {
+                    indexToRemove = i;
+                }
+            }
+
+            if (indexToRemove > -1) {
+                user.consumed_items.splice(indexToRemove, 1);
+            }
+
+            return Utils.extend({}, user);
+        });
+
+
         //TODO Remove this item form all users
         this.items = this.items.filter(function (candidate) {
             return candidate !== item;
@@ -191,9 +193,13 @@ var app = app || {};
         this.inform();
     };
 
-    app.BillModel.prototype.destroyUser = function (item) {
+    /**
+     * Delete User
+     * @param user
+     */
+    app.BillModel.prototype.destroyUser = function (user) {
         this.users = this.users.filter(function (candidate) {
-            return candidate !== item;
+            return candidate !== user;
         });
 
         this.inform();
@@ -215,26 +221,20 @@ var app = app || {};
         this.inform();
     };
 
-    app.BillModel.prototype.clearCompleted = function () {
-        this.items = this.items.filter(function (todo) {
-            return !todo.completed;
-        });
-
-        this.inform();
-    };
-
     app.BillModel.prototype.clearAll = function () {
         this.items = [];
         this.users = [];
         this.inform();
     };
 
-    app.BillModel.prototype.getItemLeftQuantity = function (item){
+    app.BillModel.prototype.getItemLeftQuantity = function (item) {
         var totalAmount = this.users.reduce(function (accum, user) {
             var userAmount = user.consumed_items.reduce(function (accum, consumedItem) {
-                if (consumedItem.item_id == item.id){
+                if (consumedItem.item_id == item.id) {
                     return accum + consumedItem.quantity;
-                } else {return accum;}
+                } else {
+                    return accum;
+                }
 
             }, 0);
 
