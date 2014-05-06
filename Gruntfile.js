@@ -5,10 +5,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-
+        version: 4,
         react: {
             dynamic_mappings: {
                 files: [
@@ -25,15 +27,14 @@ module.exports = function(grunt) {
         uglify: {
             dist: {
                 files: {
-                    'dist/js/all.min.js': [
+                    'dist/js/all.<%= version %>.min.js': [
                         'build_jsx/js/utils.js',
                         'build_jsx/**/*.js',
                         '!build_jsx/**/__tests__/*',
                         '!build_jsx/js/start.js'
                         ],
 
-                    'dist/js/libs.min.js': [
-                        'libs/jquery.min.js',
+                    'dist/js/libs.<%= version %>.min.js': [
                         'libs/react-with-addons.js',
                         ]
 
@@ -42,11 +43,6 @@ module.exports = function(grunt) {
         },
 
         copy: {
-            dist: {
-                src: 'index_template.html',
-                dest: 'dist/index.html'
-            },
-            
             css: {
                 src: 'css/*',
                 dest: 'dist/'
@@ -57,10 +53,24 @@ module.exports = function(grunt) {
             unit: {
                 configFile: 'karma.conf.js'
             }
+        },
+        clean: {
+            dist: ["dist/**/*.*"]
+        },
+        replace: {
+            example: {
+                src: ['index_template.html'],
+                dest: 'dist/index.html',
+                replacements: [{
+                    from: '@build_no',
+                    to: '<%= version %>'
+                }]
+            }
         }
     });
 
-    grunt.registerTask('build', ['react', 'uglify', 'copy:dist', 'copy:css']);
+    grunt.registerTask('build', ['clean:dist', 'react', 'uglify', 'replace', 'copy:css']);
+
     grunt.registerTask('test', ['karma']);
 
 };
