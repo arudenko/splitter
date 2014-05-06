@@ -11,6 +11,8 @@ var app = app || {};
     'use strict';
 
     var Utils = app.Utils;
+    var default_service_charge = 10;
+    var default_tax = 7.0;
 
 
     // Generic "model" object. You can use whatever
@@ -25,8 +27,8 @@ var app = app || {};
         this.users = Utils.store(this.key_users);
         this.onChanges = [];
 
-        this.service_charge = 10;
-        this.tax = 7.0;
+        this.service_charge = default_service_charge;
+        this.tax = default_tax;
     };
 
     app.BillModel.prototype.updateTaxes = function (service_charge, tax) {
@@ -184,8 +186,6 @@ var app = app || {};
             return Utils.extend({}, user);
         });
 
-
-        //TODO Remove this item form all users
         this.items = this.items.filter(function (candidate) {
             return candidate !== item;
         });
@@ -224,6 +224,8 @@ var app = app || {};
     app.BillModel.prototype.clearAll = function () {
         this.items = [];
         this.users = [];
+        this.updateTaxes(default_service_charge, default_tax);
+
         this.inform();
     };
 
