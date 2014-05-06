@@ -154,11 +154,15 @@ var App = React.createClass({
         var tax = parseFloat(this.refs.taxText.getDOMNode().value);
         this.props.model.updateTaxes(service_charge, tax);
     },
+    handleResetClick: function(event){
+        this.props.model.clearAll();
+    },
 
     render: function () {
         return (
 
             <div>
+                <button type="button" onClick={this.handleResetClick}>Reset</button> <br/>
                 Service Charge: <input ref="serviceChargeText" defaultValue={model.service_charge} onChange={this.handleChange}/>% <br/>
                 Tax: <input ref="taxText" defaultValue={model.tax} onChange={this.handleChange} />% <br/>
                 <Bill model={this.props.model}/>
