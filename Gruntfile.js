@@ -10,7 +10,8 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        version: 4,
+        version: 6,
+        lib_version: 4,
         react: {
             dynamic_mappings: {
                 files: [
@@ -34,7 +35,7 @@ module.exports = function(grunt) {
                         '!build_jsx/js/start.js'
                         ],
 
-                    'dist/js/libs.<%= version %>.min.js': [
+                    'dist/js/libs.<%= lib_version %>.min.js': [
                         'libs/react-with-addons.js',
                         ]
 
@@ -61,10 +62,16 @@ module.exports = function(grunt) {
             example: {
                 src: ['index_template.html'],
                 dest: 'dist/index.html',
-                replacements: [{
-                    from: '@build_no',
-                    to: '<%= version %>'
-                }]
+                replacements: [
+                    {
+                        from: '@build_no',
+                        to: '<%= version %>'
+                    },
+                    {
+                        from: '@lib_no',
+                        to: '<%= lib_version %>'
+                    },
+                ]
             }
         }
     });

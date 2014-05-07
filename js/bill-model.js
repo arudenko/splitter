@@ -136,6 +136,21 @@ var app = app || {};
         return this.applyTaxesChargesForAmount(consumedItem.quantity * item.amount / item.count);
     };
 
+    app.BillModel.prototype.getUserItemCount = function (selectedUser, consumedItemId) {
+        var consumedItem;
+        for (var i = 0; i < selectedUser.consumed_items.length; i++) {
+            var o = selectedUser.consumed_items[i];
+            if (o.item_id == consumedItemId) {
+                consumedItem = o;
+            }
+        }
+        if (!consumedItem) {
+            return 0;
+        }
+
+        return consumedItem.quantity;
+    };
+
     app.BillModel.prototype.getUserTotalQuantity = function (selectedUser) {
         return selectedUser.consumed_items.reduce(function (accum, item) {
             return accum + item.quantity;

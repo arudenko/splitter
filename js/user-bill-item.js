@@ -7,7 +7,7 @@ var UserBillItem = React.createClass({
     },
 
     render: function(){
-        var value = this.props.model.getUserItemAmount(this.props.user, this.props.billItem.id);
+        var value = this.props.model.getUserItemCount(this.props.user, this.props.billItem.id);
         return (
             <div>
                  {this.props.billItem.title} <input ref="amount" defaultValue={value} onChange={this.handleChange}/>

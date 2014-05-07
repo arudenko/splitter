@@ -143,6 +143,19 @@ describe("Bill Model Tests", function () {
 
     });
 
+    it("getUserItemCount", function () {
+        model.addItem("Test Name", 2, 40);
+        model.addItem("Test Name 1", 3, 15);
+        model.addUser("Alex");
+
+        model.addUserConsumption(model.items[0], model.users[0], 2);
+        model.addUserConsumption(model.items[1], model.users[0], 2);
+
+        var res = model.getUserItemCount(model.users[0], model.items[1].id);
+        expect(res).toBe(2);
+
+    });
+
     it("Get Item By Id", function () {
         model.addItem("Test Name", 1, 22.34);
         model.addItem("Test Name 1", 3, 22.34);
