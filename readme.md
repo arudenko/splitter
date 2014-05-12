@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/arudenko/splitter.svg?branch=master)](https://travis-ci.org/arudenko/splitter)
+
 # Bill Splitter
 
 When you need a split between participants. 
