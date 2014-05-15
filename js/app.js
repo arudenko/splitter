@@ -108,8 +108,13 @@ var Bill = React.createClass({
         return (
 
             <div>
-            Count: {activeTodoCount} Amount: ${totalAmount}<br/>
-
+            
+                <p className="label">
+                    Count: <span className="regular-text">{activeTodoCount}</span>
+                </p>
+                <p className="label">
+                    Amount: <span className="regular-text">${totalAmount}</span>
+                </p>
                 <table className="main-table">
                     <thead>
                         <tr>

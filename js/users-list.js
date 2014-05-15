@@ -97,6 +97,7 @@ var UsersList = React.createClass({
             main = (
                 <section id="main">
                     <input
+                    className="input-generic"
                     id="toggle-all"
                     type="checkbox"
                     onChange={this.toggleAll}
@@ -113,6 +114,7 @@ var UsersList = React.createClass({
 
             <div>
                 <input
+                className="input-generic"
                 ref="newField"
                 id="new-todo"
                 placeholder="New User"

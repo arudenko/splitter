@@ -15,6 +15,10 @@ input, textarea { outline: none; }
 	font-family: arial, sans-serif;
 }
 
+.regular-text {
+	color: #000;
+}
+
 .spaced {
 	margin-bottom: 1.5rem;
 	padding-bottom: 1.5rem;
@@ -68,8 +72,12 @@ input, textarea { outline: none; }
 .pay-attention:hover { background: #ff7a05;	}
 
 .main-table {
-	/*table-layout: fixed;*/
+	margin: 1rem 0 0 0;
 	width: 100%
+}
+
+.main-table tr {
+	margin: 0 0 1rem 0;
 }
 
 .main-table td {
