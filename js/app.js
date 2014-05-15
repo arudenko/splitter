@@ -109,38 +109,49 @@ var Bill = React.createClass({
 
             <div>
             Count: {activeTodoCount} Amount: ${totalAmount}<br/>
-                Name|Count|Total Amount for item
 
-                <table>
-                    <tr>
-                        <td width="60%">
-                            <input
-                            ref="newField"
-                            id="new-todo"
-                            placeholder="Item from bill"
-                            onKeyDown={this.handleNewTodoKeyDown}
-                            autoFocus={true}
-                            />
-                        </td>
-                        <td>
-                            <input
-                            ref="newCount"
-                            id="new-todo"
-                            placeholder="0"
-                            defaultValue="0"
-                            onKeyDown={this.handleNewTodoKeyDown}
-                            />
-                        </td>
-                        <td>
-                            <input
-                            ref="newAmount"
-                            id="new-todo"
-                            placeholder="0"
-                            defaultValue="0"
-                            onKeyDown={this.handleNewTodoKeyDown}
-                            />
-                        </td>
-                    </tr>
+                <table className="main-table">
+                    <thead>
+                        <tr>
+                            <th className="label">Name</th>
+                            <th className="label">Count</th>
+                            <th className="label">Total amount for item</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input
+                                className="input-generic"
+                                ref="newField"
+                                id="new-todo"
+                                placeholder="Item from bill"
+                                onKeyDown={this.handleNewTodoKeyDown}
+                                autoFocus={true}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                className="input-generic"
+                                ref="newCount"
+                                id="new-todo"
+                                placeholder="0"
+                                defaultValue="0"
+                                onKeyDown={this.handleNewTodoKeyDown}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                className="input-generic"
+                                ref="newAmount"
+                                id="new-todo"
+                                placeholder="0"
+                                defaultValue="0"
+                                onKeyDown={this.handleNewTodoKeyDown}
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             {main}
             </div>
@@ -161,10 +172,25 @@ var App = React.createClass({
     render: function () {
         return (
 
-            <div>
-                <button type="button" onClick={this.handleResetClick}>Reset</button> <br/>
-                Service Charge: <input ref="serviceChargeText" defaultValue={model.service_charge} onChange={this.handleChange}/>% <br/>
-                Tax: <input ref="taxText" defaultValue={model.tax} onChange={this.handleChange} />% <br/>
+            <div className="sub-container">
+                <p className="spaced">
+                    <button className="button pay-attention" type="button" onClick={this.handleResetClick}>Reset</button> <br/>
+                </p>
+                <ul className="list">
+                    <li>
+                        <p className="label">
+                            Service Charge in %
+                        </p>
+                        <input className="input-generic" ref="serviceChargeText" defaultValue={model.service_charge} onChange={this.handleChange}/>
+                    </li>
+                    <li>
+                        <p className="label">
+                            Tax in %
+                        </p>
+                        <input className="input-generic" ref="taxText" defaultValue={model.tax} onChange={this.handleChange} />
+                    </li>
+                </ul>                    
+                    
                 <Bill model={this.props.model}/>
                 Users:
                 <UsersList model={this.props.model}/>
