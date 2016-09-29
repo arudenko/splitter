@@ -13,7 +13,7 @@ Compiled version is available at [splitbillwith.me](http://splitbillwith.me/)
 - [Node.js](http://nodejs.org/)
 - [Karma](http://karma-runner.github.io/) as a runner:
     `npm install -g karma`
-- [Jasmine](http://pivotal.github.io/jasmine/) as test framework
+- [Jasmine](https://jasmine.github.io/) as test framework
 - [Grunt](http://gruntjs.com/) as build tool
 
 ### Install packages
